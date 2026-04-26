@@ -2,10 +2,13 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "Bundler",
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
     "paths": {
       "app/*": ["./packages/app/*"]
-    },
-    "baseUrl": ".",
-    "jsx": "react-jsx"
-  }
+    }
+  },
+  "exclude": ["node_modules"]
 }

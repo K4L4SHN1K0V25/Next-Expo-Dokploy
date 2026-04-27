@@ -1,35 +1,56 @@
-'use client'
-
-import { TextLink } from 'solito/link'
-import { Text, View } from 'react-native'
+import { useEffect, useState } from 'react'
+import { Text, View, FlatList, StyleSheet } from 'react-native'
+import client from 'app/api/client'
 
 export function HomeScreen() {
+  const [productos, setProductos] = useState([])
+
+  useEffect(() => {
+    client.get('/productos')
+      .then(res => setProductos(res.data))
+      .catch(err => console.error("Error cargando inventario", err))
+  }, [])
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 16,
-        gap: 32,
-      }}
-    >
-      <H1>Welcome to Solito.</H1>
-      <View style={{ maxWidth: 600, gap: 16 }}>
-        <Text style={{ textAlign: 'center' }}>
-          Here is a basic starter to show you how you can navigate from one
-          screen to another. This screen uses the same code on Next.js and React
-          Native.
-        </Text>
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Inventario POS</Text>
+      
+      <FlatList
+        data={productos}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <View>
+              <Text style={styles.prodName}>{item.nombre}</Text>
+              <Text style={styles.prodCat}>{item.categoria}</Text>
+            </View>
+            <View style={{ alignItems: 'flex-end' }}>
+              <Text style={styles.prodPrice}>${item.precio.toFixed(2)}</Text>
+              <Text style={styles.prodStock}>Stock: {item.stock}</Text>
+            </View>
+          </View>
+        )}
+      />
     </View>
   )
 }
 
-const H1 = ({ children }: { children: React.ReactNode }) => {
-  return <Text style={{ fontWeight: '800', fontSize: 24 }}>{children}</Text>
-}
-
-const P = ({ children }: { children: React.ReactNode }) => {
-  return <Text style={{ textAlign: 'center' }}>{children}</Text>
-}
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20, backgroundColor: '#f5f5f5' },
+  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, color: '#333' },
+  card: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    elevation: 3,
+  },
+  prodName: { fontSize: 18, fontWeight: '600' },
+  prodCat: { color: '#666', fontSize: 14 },
+  prodPrice: { fontSize: 18, fontWeight: '700', color: '#2ecc71' },
+  prodStock: { fontSize: 12, color: '#999' }
+})

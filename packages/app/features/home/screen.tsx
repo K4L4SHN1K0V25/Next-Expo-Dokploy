@@ -21,30 +21,6 @@ export function HomeScreen() {
           screen to another. This screen uses the same code on Next.js and React
           Native.
         </Text>
-        <Text style={{ textAlign: 'center' }}>
-          Solito is made by{' '}
-          <TextLink
-            href="https://twitter.com/fernandotherojo"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: 'blue' }}
-          >
-            Fernando Rojo
-          </TextLink>
-          .
-        </Text>
-      </View>
-      <View style={{ flexDirection: 'row', gap: 32 }}>
-        <TextLink
-          href="/users/fernando"
-          style={{
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: 'blue',
-          }}
-        >
-          Link
-        </TextLink>
       </View>
     </View>
   )

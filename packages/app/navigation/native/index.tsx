@@ -4,9 +4,6 @@ import { HomeScreen } from 'app/features/home/screen'
 
 const Stack = createNativeStackNavigator<{
   home: undefined
-  'user-detail': {
-    id: string
-  }
 }>()
 
 export function NativeNavigation() {
@@ -17,12 +14,6 @@ export function NativeNavigation() {
         component={HomeScreen}
         options={{
           title: 'Home',
-        }}
-      />
-      <Stack.Screen
-        component={UserDetailScreen}
-        options={{
-          title: 'User',
         }}
       />
     </Stack.Navigator>
